@@ -50,20 +50,6 @@ button{
   from{transform:translateY(0);opacity:1}
   to{transform:translateY(-600px);opacity:0}
 }
-#hiddenMsg{
-  display:none;
-  position:fixed;
-  top:40%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:rgba(255,255,255,0.95);
-  padding:20px;
-  border-radius:20px;
-  font-size:18px;
-  text-align:center;
-  z-index:999;
-  box-shadow:0 0 10px #ff4d6d;
-}
 </style>
 </head>
 <body>
@@ -76,8 +62,6 @@ button{
   <p>Ready for a small surprise?</p>
   <button onclick="q1()">Yes 😊</button>
 </div>
-
-<div id="hiddenMsg">You are my world 🌎💖</div>
 
 <script>
 const animationLayer = document.getElementById("animationLayer");
@@ -126,13 +110,11 @@ function finalNo(){
 function finalYes(){
   const c = document.getElementById("content");
   c.innerHTML=`
-    <h2 id="loveText">Love You baccha ❤️</h2>
-    <p>Happy Rose Day 🌹</p>
-    <p>Tap anywhere for a secret 💌</p>`;
+    <h2>Love You baccha ❤️</h2>
+    <p>Happy Rose Day 🌹</p>`;
 
   startHearts();
   startConfetti();
-  startTypewriter();
   startBgGradient();
 }
 
@@ -162,17 +144,6 @@ function startConfetti(){
   },500);
 }
 
-/* Typewriter effect */
-function startTypewriter(){
-  const txt = "Love You baccha ❤️";
-  let i=0;
-  const loveEl=document.getElementById("loveText");
-  setInterval(()=>{
-    loveEl.innerText=txt.slice(0,i+1);
-    i=(i+1)%txt.length;
-  },200);
-}
-
 /* Background gradient animation */
 function startBgGradient(){
   let deg = 135;
@@ -181,14 +152,7 @@ function startBgGradient(){
     document.body.style.background=`linear-gradient(${deg}deg,#ff758c,#ff7eb3)`;
   },100);
 }
-
-/* Hidden personal message on tap */
-document.body.addEventListener("click", ()=>{
-  const msg = document.getElementById("hiddenMsg");
-  msg.style.display="block";
-  setTimeout(()=>{msg.style.display="none"},3000);
-});
 </script>
 
 </body>
-  </html>
+</html>
