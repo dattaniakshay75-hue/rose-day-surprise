@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>🌹 For SEJAL</title>
+  <title>🌹 For baccha</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body{
@@ -11,20 +11,30 @@
       font-family:Arial,sans-serif;overflow:hidden;
     }
     .box{
-      background:#fff;padding:22px;border-radius:20px;
+      background:white;padding:22px;border-radius:20px;
       text-align:center;width:90%;max-width:340px;
-      animation:pop .8s ease;
+      animation:pop .8s ease;z-index:2;
     }
     button{
-      background:#ff4d6d;color:#fff;border:none;
+      background:#ff4d6d;color:white;border:none;
       padding:10px 16px;border-radius:12px;
       font-size:14px;margin:6px;cursor:pointer;
-      position:relative;
     }
     .rose{font-size:50px;animation:float 2s infinite alternate;}
-    .no{position:absolute;}
     @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
     @keyframes float{from{transform:translateY(0)}to{transform:translateY(-15px)}}
+
+    /* Hearts */
+    .heart{
+      position:absolute;
+      font-size:18px;
+      animation:rise 4s linear infinite;
+      opacity:.8;
+    }
+    @keyframes rise{
+      from{transform:translateY(0);opacity:1}
+      to{transform:translateY(-600px);opacity:0}
+    }
   </style>
 </head>
 <body>
@@ -32,7 +42,7 @@
 <div class="box">
   <div id="content">
     <div class="rose">🌹</div>
-    <h3>Hey SEJAL ❤️</h3>
+    <h3>Hey baccha ❤️</h3>
     <p>Ready for a small surprise?</p>
     <button onclick="next()">Yes 😊</button>
   </div>
@@ -79,12 +89,7 @@ function showProposal(){
     <h3>Last Question 💍</h3>
     <p>Will you be mine forever?</p>
     <button onclick="yes()">YES 💖</button>
-    <button class="no" onmouseover="move(this)" onclick="no()">NO 😶</button>`;
-}
-
-function move(btn){
-  btn.style.top = Math.random()*200 + "px";
-  btn.style.left = Math.random()*200 + "px";
+    <button onclick="no()">NO 😶</button>`;
 }
 
 function no(){
@@ -100,13 +105,58 @@ function no(){
   }
 }
 
+/* YES AFTER MAGIC */
 function yes(){
   const c = document.getElementById("content");
   c.innerHTML = `
     <div class="rose">🌹🌹🌹</div>
-    <h2>I Love You SEJAL ❤️</h2>
-    <p>Happy Rose Day 💐</p>
-    <p>You made my day special 😊</p>`;
+    <h2>I Love You baccha ❤️</h2>
+    <p id="loveText">You are my favourite person 🥰</p>
+  `;
+
+  startHearts();          // 1️⃣ Hearts animation
+  startLoveMessages();   // 2️⃣ Sweet message loop
+  startRoseRain();       // 3️⃣ Rose rain
+}
+
+/* Hearts generator */
+function startHearts(){
+  setInterval(()=>{
+    const h = document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="0px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  },300);
+}
+
+/* Love message loop */
+const loveMsgs=[
+  "You are my favourite person 🥰",
+  "My heart is always with you ❤️",
+  "Thank you for saying YES 💖"
+];
+let li=0;
+function startLoveMessages(){
+  setInterval(()=>{
+    document.getElementById("loveText").innerText = loveMsgs[li];
+    li=(li+1)%loveMsgs.length;
+  },2000);
+}
+
+/* Rose rain */
+function startRoseRain(){
+  setInterval(()=>{
+    const r=document.createElement("div");
+    r.className="heart";
+    r.innerHTML="🌹";
+    r.style.left=Math.random()*100+"vw";
+    r.style.bottom="0px";
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(),4000);
+  },500);
 }
 </script>
 
