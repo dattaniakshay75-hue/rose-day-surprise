@@ -8,23 +8,28 @@
 body{
   margin:0;
   height:100vh;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family:Arial,sans-serif;
-  overflow:hidden;
-  transition: background 2s;
   background: linear-gradient(135deg,#ff758c,#ff7eb3);
+  transition: background 2s;
+}
+#animationLayer, #textLayer{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  pointer-events:none;
 }
 .box{
+  position:relative;
+  z-index:10;
   background:#fff;
   padding:22px;
   border-radius:20px;
   text-align:center;
   width:90%;
   max-width:340px;
-  z-index:2;
-  position:relative;
 }
 button{
   background:#ff4d6d;
@@ -40,7 +45,6 @@ button{
   position:absolute;
   font-size:18px;
   animation:up 4s linear infinite;
-  z-index:1;
 }
 @keyframes up{
   from{transform:translateY(0);opacity:1}
@@ -51,7 +55,7 @@ button{
   position:fixed;
   top:40%;
   left:50%;
-  transform:translate(-50%, -50%);
+  transform:translate(-50%,-50%);
   background:rgba(255,255,255,0.95);
   padding:20px;
   border-radius:20px;
@@ -63,8 +67,7 @@ button{
 #countdownOverlay{
   display:none;
   position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
+  top:0;left:0;width:100%;height:100%;
   background:rgba(0,0,0,0.5);
   color:white;
   font-size:60px;
@@ -77,6 +80,9 @@ button{
 </style>
 </head>
 <body>
+
+<div id="animationLayer"></div>
+<div id="textLayer"></div>
 
 <div class="box" id="content">
   <div class="rose">🌹</div>
@@ -96,6 +102,8 @@ const sadLines=[
   "Dil dukhta hai 🥺",
   "Last chance ❤️"
 ];
+const animationLayer = document.getElementById("animationLayer");
+const textLayer = document.getElementById("textLayer");
 
 /* Questions */
 function q1(){
@@ -147,7 +155,7 @@ function startHearts(){
     h.innerHTML=Math.random()>0.5?"💖":"🌹";
     h.style.left=Math.random()*100+"vw";
     h.style.bottom="0";
-    document.body.appendChild(h);
+    animationLayer.appendChild(h);
     setTimeout(()=>h.remove(),4000);
   },300);
 }
@@ -160,7 +168,7 @@ function startConfetti(){
     c.innerHTML="🎉";
     c.style.left=Math.random()*100+"vw";
     c.style.bottom="0";
-    document.body.appendChild(c);
+    animationLayer.appendChild(c);
     setTimeout(()=>c.remove(),4000);
   },500);
 }
@@ -191,9 +199,9 @@ function startCountdownOverlay(){
   overlay.style.display="flex";
   let count = 3;
   const interval = setInterval(()=>{
-    overlay.innerText=count>0?count:"🎉";
+    overlay.innerText = count>0 ? count : "🎉";
     count--;
-    if(count<0){
+    if(count < 0){
       clearInterval(interval);
       setTimeout(()=>{overlay.style.display="none";},1000);
     }
