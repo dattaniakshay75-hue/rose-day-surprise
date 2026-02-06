@@ -1,163 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>🌹 For baccha</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body{
-      margin:0;height:100vh;
-      background:linear-gradient(135deg,#ff758c,#ff7eb3);
-      display:flex;align-items:center;justify-content:center;
-      font-family:Arial,sans-serif;overflow:hidden;
-    }
-    .box{
-      background:white;padding:22px;border-radius:20px;
-      text-align:center;width:90%;max-width:340px;
-      animation:pop .8s ease;z-index:2;
-    }
-    button{
-      background:#ff4d6d;color:white;border:none;
-      padding:10px 16px;border-radius:12px;
-      font-size:14px;margin:6px;cursor:pointer;
-    }
-    .rose{font-size:50px;animation:float 2s infinite alternate;}
-    @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
-    @keyframes float{from{transform:translateY(0)}to{transform:translateY(-15px)}}
-
-    /* Hearts */
-    .heart{
-      position:absolute;
-      font-size:18px;
-      animation:rise 4s linear infinite;
-      opacity:.8;
-    }
-    @keyframes rise{
-      from{transform:translateY(0);opacity:1}
-      to{transform:translateY(-600px);opacity:0}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Surprise for baccha 🌹</title>
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+  transition: background 2s;
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
+}
+.box{
+  background:#fff;
+  padding:22px;
+  border-radius:20px;
+  text-align:center;
+  width:90%;
+  max-width:340px;
+  z-index:2;
+}
+button{
+  background:#ff4d6d;
+  color:white;
+  border:none;
+  padding:10px 16px;
+  border-radius:12px;
+  font-size:14px;
+  margin:6px;
+  cursor:pointer;
+}
+.rose{
+  font-size:48px;
+}
+.heart{
+  position:absolute;
+  font-size:18px;
+  animation:up 4s linear infinite;
+}
+@keyframes up{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-600px);opacity:0}
+}
+#hiddenMsg{
+  display:none;
+  position:fixed;
+  top:40%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  background:rgba(255,255,255,0.9);
+  padding:20px;
+  border-radius:20px;
+  font-size:18px;
+  text-align:center;
+  z-index:999;
+  box-shadow:0 0 10px #ff4d6d;
+}
+</style>
 </head>
 <body>
 
-<div class="box">
-  <div id="content">
-    <div class="rose">🌹</div>
-    <h3>Hey baccha ❤️</h3>
-    <p>Ready for a small surprise?</p>
-    <button onclick="next()">Yes 😊</button>
-  </div>
+<div class="box" id="content">
+  <div class="rose">🌹</div>
+  <h3>Hey baccha ❤️</h3>
+  <p>Ready for a small surprise?</p>
+  <button onclick="q1()">Yes 😊</button>
 </div>
 
-<script>
-let step = 0;
-let sadIndex = 0;
+<div id="hiddenMsg">You are my world 🌎💖</div>
 
-const sadLines = [
+<script>
+let sad = 0;
+const sadLines=[
   "Are you sure? 😢",
-  "Thoda soch lo na 💔",
-  "Dil thoda sa dukha 😔",
-  "Itna bhi bura nahi hoon 🥺",
-  "Last chance… please ❤️"
+  "Please soch lo 💔",
+  "Dil dukhta hai 🥺",
+  "Last chance ❤️"
 ];
 
-function next(){
-  const c = document.getElementById("content");
-
-  if(step === 0){
-    c.innerHTML = `
-      <h3>Question 1 💕</h3>
-      <p>Do you like surprises?</p>
-      <button onclick="next()">Yes 😍</button>
-      <button onclick="next()">Obviously 🙈</button>`;
-  }
-  else if(step === 1){
-    c.innerHTML = `
-      <h3>Question 2 🌹</h3>
-      <p>Am I special to you?</p>
-      <button onclick="next()">Very much ❤️</button>
-      <button onclick="next()">Of course 😘</button>`;
-  }
-  else if(step === 2){
-    showProposal();
-  }
-  step++;
+function q1(){
+  content.innerHTML=`
+    <p>Do you like surprises? 💕</p>
+    <button onclick="q2()">Yes 😍</button>
+    <button onclick="q2()">Obviously 🙈</button>`;
 }
 
-function showProposal(){
-  const c = document.getElementById("content");
-  c.innerHTML = `
-    <h3>Last Question 💍</h3>
-    <p>Will you be mine forever?</p>
+function q2(){
+  content.innerHTML=`
+    <p>Am I special to you? 🌹</p>
+    <button onclick="proposal()">Very much ❤️</button>
+    <button onclick="proposal()">Of course 😘</button>`;
+}
+
+function proposal(){
+  content.innerHTML=`
+    <p>Will you be mine forever? 💍</p>
     <button onclick="yes()">YES 💖</button>
     <button onclick="no()">NO 😶</button>`;
 }
 
 function no(){
-  const c = document.getElementById("content");
-  c.innerHTML = `
-    <h3>${sadLines[sadIndex]}</h3>
-    <p>Will you be mine forever?</p>
+  content.innerHTML=`
+    <p>${sadLines[sad]}</p>
     <button onclick="yes()">YES 💖</button>
     <button onclick="no()">NO 😭</button>`;
-  sadIndex++;
-  if(sadIndex >= sadLines.length){
-    sadIndex = sadLines.length - 1;
-  }
+  if(sad < sadLines.length-1) sad++;
 }
 
-/* YES AFTER MAGIC */
+/* YES surprise */
 function yes(){
   const c = document.getElementById("content");
-  c.innerHTML = `
-    <div class="rose">🌹🌹🌹</div>
+  c.innerHTML=`
     <h2>Love You baccha ❤️</h2>
-    <p>Happy Rose Day 🌹</p>
-    <p>You are my favourite person 🥰</p>
+    <p id="loveText">Happy Rose Day 🌹</p>
+    <p>Tap anywhere for a secret 💌</p>`;
 
-  startHearts();          // 1️⃣ Hearts animation
-  startLoveMessages();   // 2️⃣ Sweet message loop
-  startRoseRain();       // 3️⃣ Rose rain
+  startHearts();
+  startConfetti();
+  startTypewriter();
+  startBgGradient();
+  startCountdown();
 }
 
-/* Hearts generator */
+/* Floating hearts */
 function startHearts(){
   setInterval(()=>{
-    const h = document.createElement("div");
+    const h=document.createElement("div");
     h.className="heart";
-    h.innerHTML="💖";
+    h.innerHTML=Math.random()>0.5?"💖":"🌹";
     h.style.left=Math.random()*100+"vw";
-    h.style.bottom="0px";
+    h.style.bottom="0";
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),4000);
   },300);
 }
 
-/* Love message loop */
-const loveMsgs=[
-  "You are my favourite person 🥰",
-  "My heart is always with you ❤️",
-  "Thank you for saying YES 💖"
-];
-let li=0;
-function startLoveMessages(){
+/* Confetti */
+function startConfetti(){
   setInterval(()=>{
-    document.getElementById("loveText").innerText = loveMsgs[li];
-    li=(li+1)%loveMsgs.length;
-  },2000);
-}
-
-/* Rose rain */
-function startRoseRain(){
-  setInterval(()=>{
-    const r=document.createElement("div");
-    r.className="heart";
-    r.innerHTML="🌹";
-    r.style.left=Math.random()*100+"vw";
-    r.style.bottom="0px";
-    document.body.appendChild(r);
-    setTimeout(()=>r.remove(),4000);
+    const c=document.createElement("div");
+    c.className="heart";
+    c.innerHTML="🎉";
+    c.style.left=Math.random()*100+"vw";
+    c.style.bottom="0";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
   },500);
 }
+
+/* Typewriter effect */
+function startTypewriter(){
+  const txt = "Love You baccha ❤️";
+  let i=0;
+  const loveEl=document.getElementById("loveText");
+  setInterval(()=>{
+    loveEl.innerText=txt.slice(0,i+1);
+    i=(i+1)%txt.length;
+  },200);
+}
+
+/* Background gradient animation */
+function startBgGradient(){
+  let deg = 135;
+  setInterval(()=>{
+    deg +=1;
+    document.body.style.background=`linear-gradient(${deg}deg,#ff758c,#ff7eb3)`;
+  },100);
+}
+
+/* Countdown mini surprise */
+function startCountdown(){
+  let count = 3;
+  const c=document.getElementById("content");
+  const interval = setInterval(()=>{
+    c.innerHTML=`<h2>${count}</h2>`;
+    count--;
+    if(count<0){
+      clearInterval(interval);
+      c.innerHTML=`
+        <h2>Love You baccha ❤️</h2>
+        <p>Happy Rose Day 🌹</p>
+        <p>Tap anywhere for a secret 💌</p>`;
+    }
+  },1000);
+}
+
+/* Hidden personal message on tap */
+document.body.addEventListener("click", ()=>{
+  const msg = document.getElementById("hiddenMsg");
+  msg.style.display="block";
+  setTimeout(()=>{msg.style.display="none"},3000);
+});
 </script>
 
 </body>
