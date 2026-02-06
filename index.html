@@ -24,6 +24,7 @@ body{
   width:90%;
   max-width:340px;
   z-index:2;
+  position:relative;
 }
 button{
   background:#ff4d6d;
@@ -35,13 +36,11 @@ button{
   margin:6px;
   cursor:pointer;
 }
-.rose{
-  font-size:48px;
-}
 .heart{
   position:absolute;
   font-size:18px;
   animation:up 4s linear infinite;
+  z-index:1;
 }
 @keyframes up{
   from{transform:translateY(0);opacity:1}
@@ -53,13 +52,27 @@ button{
   top:40%;
   left:50%;
   transform:translate(-50%, -50%);
-  background:rgba(255,255,255,0.9);
+  background:rgba(255,255,255,0.95);
   padding:20px;
   border-radius:20px;
   font-size:18px;
   text-align:center;
   z-index:999;
   box-shadow:0 0 10px #ff4d6d;
+}
+#countdownOverlay{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.5);
+  color:white;
+  font-size:60px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+  flex-direction:column;
 }
 </style>
 </head>
@@ -73,6 +86,7 @@ button{
 </div>
 
 <div id="hiddenMsg">You are my world 🌎💖</div>
+<div id="countdownOverlay">3</div>
 
 <script>
 let sad = 0;
@@ -83,27 +97,25 @@ const sadLines=[
   "Last chance ❤️"
 ];
 
+/* Questions */
 function q1(){
   content.innerHTML=`
     <p>Do you like surprises? 💕</p>
     <button onclick="q2()">Yes 😍</button>
     <button onclick="q2()">Obviously 🙈</button>`;
 }
-
 function q2(){
   content.innerHTML=`
     <p>Am I special to you? 🌹</p>
     <button onclick="proposal()">Very much ❤️</button>
     <button onclick="proposal()">Of course 😘</button>`;
 }
-
 function proposal(){
   content.innerHTML=`
     <p>Will you be mine forever? 💍</p>
     <button onclick="yes()">YES 💖</button>
     <button onclick="no()">NO 😶</button>`;
 }
-
 function no(){
   content.innerHTML=`
     <p>${sadLines[sad]}</p>
@@ -116,15 +128,15 @@ function no(){
 function yes(){
   const c = document.getElementById("content");
   c.innerHTML=`
-    <h2>Love You baccha ❤️</h2>
-    <p id="loveText">Happy Rose Day 🌹</p>
+    <h2 id="loveText">Love You baccha ❤️</h2>
+    <p>Happy Rose Day 🌹</p>
     <p>Tap anywhere for a secret 💌</p>`;
 
   startHearts();
   startConfetti();
   startTypewriter();
   startBgGradient();
-  startCountdown();
+  startCountdownOverlay();
 }
 
 /* Floating hearts */
@@ -173,19 +185,17 @@ function startBgGradient(){
   },100);
 }
 
-/* Countdown mini surprise */
-function startCountdown(){
+/* Countdown overlay */
+function startCountdownOverlay(){
+  const overlay = document.getElementById("countdownOverlay");
+  overlay.style.display="flex";
   let count = 3;
-  const c=document.getElementById("content");
   const interval = setInterval(()=>{
-    c.innerHTML=`<h2>${count}</h2>`;
+    overlay.innerText=count>0?count:"🎉";
     count--;
     if(count<0){
       clearInterval(interval);
-      c.innerHTML=`
-        <h2>Love You baccha ❤️</h2>
-        <p>Happy Rose Day 🌹</p>
-        <p>Tap anywhere for a secret 💌</p>`;
+      setTimeout(()=>{overlay.style.display="none";},1000);
     }
   },1000);
 }
